@@ -71,7 +71,7 @@ module ChartFu
           
           opts[:labels] = d.keys.map {|key| Date.parse(key).strftime(date_format) }
           opts[:data]   = d.values
-          opts[:legend]   = false            
+          opts[:legend] = false            
           
           Charts::Line.new(opts).render
           
@@ -96,7 +96,7 @@ module ChartFu
             # multi-axis line graph
             opts[:data]   = data
             opts[:labels] = []
-            opts[:legend] = false
+            opts[:legend] = true
           
             Charts::Line.new(opts).render
           
