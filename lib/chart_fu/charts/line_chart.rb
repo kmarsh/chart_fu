@@ -1,7 +1,11 @@
 module ChartFu
   module Charts
-    module Line
+    class Line
+      attr_accessor :axis, :title, :labels, :size
       
+      def new
+        
+      end
     end
   end
 end
