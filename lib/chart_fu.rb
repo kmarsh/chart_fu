@@ -50,6 +50,8 @@ module ChartFu
           # time-series line chart of +DATE(created_at)+ values
           d = data.send(:count, :group => "DATE(created_at)")
           
+          puts (opts[:width]/d.size.to_f)
+          
           date_format = case (opts[:width]/d.size.to_f)
             when 0..10
               opts[:shortest_format]
@@ -69,12 +71,15 @@ module ChartFu
           
           opts[:labels] = d.keys.map {|key| Date.parse(key).strftime(date_format) }
           opts[:data]   = d.values
+          opts[:legend]   = false            
           
           Charts::Line.new(opts).render
           
         when 'Array'
           # ambiguous x-axis line chart
           opts[:data]   = data
+          opts[:labels] = []
+          opts[:legend] = false
           
           Charts::Line.new(opts).render
           
@@ -83,9 +88,18 @@ module ChartFu
             # time-series line chart
             opts[:labels] = data.keys
             opts[:data]   = d.values
+            opts[:legend] = false
           
             Charts::Line.new(opts).render
             
+          elsif data.values.all? {|v| v.is_a?(Array)}
+            # multi-axis line graph
+            opts[:data]   = data
+            opts[:labels] = []
+            opts[:legend] = false
+          
+            Charts::Line.new(opts).render
+          
           else
             # pie chart
             

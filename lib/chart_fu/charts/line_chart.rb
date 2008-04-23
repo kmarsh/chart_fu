@@ -6,6 +6,7 @@ module ChartFu
       attr_accessor :labels
       attr_accessor :data
       attr_accessor :width, :height
+      attr_accessor :legend
       
       def initialize(opts)
         @opts = opts
@@ -14,6 +15,7 @@ module ChartFu
         @data   = opts[:data]
         @width  = opts[:width]
         @height = opts[:height]
+        @legend = opts[:legend]
       end
       
       def format_axis

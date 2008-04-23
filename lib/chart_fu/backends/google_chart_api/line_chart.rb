@@ -17,9 +17,20 @@ module ChartFu
             @data   = opts[:data]
             @width  = opts[:width]
             @height = opts[:height]
+            @legend = opts[:legend]
             
             @google_chart = GoogleChart::LineChart.new("#{@width}x#{@height}", @title)
-            @google_chart.data "", @data
+            
+            @google_chart.show_legend = opts[:legend]
+            
+            if @data.is_a?(Hash)
+              @data.each do |key, values|
+                @google_chart.data key, values                
+              end
+            else
+              @google_chart.data nil, @data
+            end
+            
             @google_chart.axis :x, :labels => @labels
           end
           
