@@ -5,8 +5,8 @@ Examples
 
 The simplest thing that could possibly work:
 
-  <%= chart_fu Post %>
+    <%= chart_fu Post %>
   
 Adding a little more options:
   
-  <%= chart_fu Post, :title => "Posts Over Time", :from => 1.week.ago %>
+    <%= chart_fu Post, :title => "Posts Over Time", :from => 1.week.ago %>
