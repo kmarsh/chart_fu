@@ -9,17 +9,23 @@ module ChartFu
           attr_accessor :data
           attr_accessor :width, :height
           
+          attr_accessor :google_chart
+          
           def initialize(opts)
-            puts opts.inspect
             @title  = opts[:title]
             @labels = opts[:labels]
             @data   = opts[:data]
             @width  = opts[:width]
             @height = opts[:height]
+            
+            @google_chart = GoogleChart::LineChart.new("#{@width}x#{@height}", @title)
+            @google_chart.data "", @data
+            @google_chart.axis :x, :labels => @labels
           end
           
           def render
-            return "<img src=\"http://chart.apis.google.com/chart?chxt=x,y&chxl=0:|#{@labels.join("|") if @labels}|1:|0|100&cht=lc&chd=s:cEAELFJHHHKUju9uuXUc&chco=76A4FB&chls=2.0&chs=#{@width}x#{@height}\" title=\"#{@title}\" alt=\"#{@title}\">"
+            #return "<img src=\"http://chart.apis.google.com/chart?chxt=x,y&chxl=0:|#{@labels.join("|") if @labels}|1:|0|100&cht=lc&chd=s:cEAELFJHHHKUju9uuXUc&chco=76A4FB&chls=2.0&chs=#{@width}x#{@height}\" title=\"#{@title}\" alt=\"#{@title}\">"
+            return "<img src=\"#{@google_chart.to_url}\" />"
           end
         end
       end
