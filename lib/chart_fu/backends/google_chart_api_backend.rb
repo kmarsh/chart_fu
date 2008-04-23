@@ -1,7 +1,1 @@
-module ChartFu
-  module Backends
-    module GoogleChartAPI
-      
-    end
-  end
-end
+require 'chart_fu/backends/google_chart_api/line_chart'
