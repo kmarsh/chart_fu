@@ -34,35 +34,57 @@ module ChartFu
     #                     optional, default: false
     def chart_fu(data, opts = {})
 
-      opts[:width]  = 320 if opts[:width].blank?
-      opts[:height] = 240 if opts[:width].blank?
+      opts[:width]  = 240 if opts[:width].blank?
+      opts[:height] = 100 if opts[:height].blank?
       opts[:title]  = "" if opts[:title].blank?
       
+      opts[:shortest_format] = '%b'
+      opts[:short_format] = '%m/%Y'
+      opts[:medium_format] = '%m/%d/%Y'
+      opts[:long_format] = '%m/%d/%Y'
+      
       # Build up a graph based on what data we have
-      case data.class
+      case data.class.to_s
         # TODO: Better test if +model+ really is an AR model
-        when Class
+        when 'Class'
           # time-series line chart of +DATE(created_at)+ values
           d = data.send(:count, :group => "DATE(created_at)")
           
-          opts[:labels] = d.keys.map {|key| Date.parse(key) }
+          date_format = case (opts[:width]/d.size.to_f)
+            when 0..10
+              opts[:shortest_format]
+
+            when 11..20
+              opts[:short_format]
+
+            when 21..30
+              opts[:medium_format]
+
+            when 31..40
+              opts[:long_format]
+
+            else
+              ''
+          end
+          
+          opts[:labels] = d.keys.map {|key| Date.parse(key).strftime(date_format) }
           opts[:data]   = d.values
           
-          Backends::GoogleChartAPI::Charts::Line.new(opts).render
+          Charts::Line.new(opts).render
           
-        when Array
+        when 'Array'
           # ambiguous x-axis line chart
           opts[:data]   = data
           
-          Backends::GoogleChartAPI::Charts::Line.new(opts).render
+          Charts::Line.new(opts).render
           
-        when Hash
-          if data.keys.all? {|k| k.is_a?(Date) || k.is_a(Time) }
+        when 'Hash'
+          if data.keys.all? {|k| k.is_a?(Date) || k.is_a?(Time) }
             # time-series line chart
             opts[:labels] = data.keys
             opts[:data]   = d.values
           
-            Backends::GoogleChartAPI::Charts::Line.new(opts).render
+            Charts::Line.new(opts).render
             
           else
             # pie chart
