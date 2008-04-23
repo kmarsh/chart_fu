@@ -1,3 +1,3 @@
 require 'chart_fu'
 
-Object.send :include, ChartFu::Mixin
+ActionView::Base.send :include, ChartFu::Mixin
