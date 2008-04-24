@@ -41,11 +41,8 @@ module ChartFu
       opts[:width]  = 240 if opts[:width].blank?
       opts[:height] = 100 if opts[:height].blank?
       opts[:title]  = "" if opts[:title].blank?
-      
-      opts[:shortest_format] = '%b'
-      opts[:short_format] = '%m/%Y'
-      opts[:medium_format] = '%m/%d/%Y'
-      opts[:long_format] = '%m/%d/%Y'
+      opts[:format] = Hash.new({})
+      # opts[:format][:]
       
       # Build up a graph based on what data we have
       case data.class.to_s
@@ -53,24 +50,50 @@ module ChartFu
         when 'Class'
           # time-series line chart of +DATE(created_at)+ values
           # TODO: Depending on zoom level, pull weeks or months or years
-          d = data.send(:count, :group => "DATE(created_at)")
-          
-          puts d.inspect
-          
-          puts (opts[:width]/d.size.to_f)
-          
-          date_format = case (opts[:width]/d.size.to_f)
-            when 0..10
-              opts[:shortest_format]
+          d = data.send(:count, :group => "DATE(created_at)", :order => "created_at")
 
-            when 11..20
-              opts[:short_format]
+          return if d.empty?
 
-            when 21..30
-              opts[:medium_format]
+          points = d.size
+          min_date, max_date = d.keys.first, d.keys.last
+          range = (Date.parse(max_date) - Date.parse(min_date)).to_i              # days
+          point_density = (opts[:width].to_f / points.to_f)
+          
+          puts "points: #{points}, range: #{range}, point_density: #{point_density}"
+          
+          # Based on the number of results we get back, and how far apart they
+          # are, we may want to pull less-specific data. There are a few
+          # possibilities:
+          case range
+            when 0..7
+              
+            when 8..30
 
-            when 31..40
-              opts[:long_format]
+            when 31..90
+              
+            when 91..180
+              
+            else
+              
+          end
+          
+          # Format the date axis based on:
+          #   1. how many data points we have,
+          #   2. how wide the graph is, and
+          #   3. how much time is between the min and max
+          
+          date_format = case point_density
+            when 0..30
+              '%b'
+
+            when 31..60
+              '%m/%Y'
+
+            when 61..90
+              '%m/%d/%Y'
+
+            when 91..120
+              '%m/%d/%Y'
 
             else
               ''
