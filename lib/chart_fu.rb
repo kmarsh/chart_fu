@@ -55,6 +55,8 @@ module ChartFu
           # TODO: Depending on zoom level, pull weeks or months or years
           d = data.send(:count, :group => "DATE(created_at)")
           
+          puts d.inspect
+          
           puts (opts[:width]/d.size.to_f)
           
           date_format = case (opts[:width]/d.size.to_f)

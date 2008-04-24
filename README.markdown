@@ -25,7 +25,7 @@ chart_fu understands other Ruby data structures as well:
 
 == Principles
 
-chart_fu aims to be civil when collecting and displaying charts, using sensible defaults that will create meaningful, pleasing, and readable output.
+chart_fu aims to be civil when collecting data and displaying charts, using sensible defaults that will create meaningful, pleasing, and readable output.
     
 == Backends
 
