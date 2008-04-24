@@ -1,7 +1,7 @@
 module ChartFu
   module Charts
-    class Pie < Base
-      
+    class Scatter < Base
+
     end
   end
 end

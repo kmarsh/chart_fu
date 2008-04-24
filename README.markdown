@@ -12,13 +12,24 @@ Adding a few more options:
   
     <%= chart_fu Post, :title => "Posts Over Time", :from => 1.week.ago %>
 
+chart_fu understands other Ruby data structures as well:
+
+    <%= chart_fu [1, 2, 3, 4, 5], [5, 4, 3, 2, 1] %>
+
+    <%= chart_fu [1, 2, 3, 4, 5] %>
+    
+    <%= chart_fu {"A" => [1, 2, 3, 4, 5], "B" => [1, 2, 3, 4, 5]} %>
+    
+    <%= chart_fu {Date.new(2008, 2, 1) => 1, Date.new(2008, 3, 1) => 5},
+          :from => Date.new(2008, 1, 1), :to => Date.new(2008, 12, 31) %>
+
 == Principles
 
 chart_fu aims to be civil when collecting and displaying charts, using sensible defaults that will create meaningful, pleasing, and readable output.
     
 == Backends
 
-chart_fu doesn't generate charts on its own, but rather acts as a standard frontend to whatever charting library you choose. This means only having to write charting code once and only once.
+chart_fu doesn't generate graphics on its own, but rather acts as a abstract frontend to whatever charting library you choose. This means only having to write charting code once and only once.
 
  * Google Chart API (via http://gchartrb.rubyforge.org/) - default
  * Gruff (http://nubyonrails.com/pages/gruff)

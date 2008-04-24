@@ -2,6 +2,14 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
+task :default => :test
+
+Rake::TestTask.new do |t|
+  t.libs << "test"
+  t.test_files = FileList['test/test*.rb']
+  t.verbose = true
+end
+
 desc 'Generate RDoc documentation for the chart_fu plugin.'
 Rake::RDocTask.new(:rdoc) do |rdoc|
   files = ['README.markdown', 'LICENSE', 'lib/**/*.rb']

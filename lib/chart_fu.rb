@@ -1,5 +1,9 @@
+require 'chart_fu/charts/base'
 require 'chart_fu/charts/line_chart'
 require 'chart_fu/charts/pie_chart'
+require 'chart_fu/charts/scatter_chart'
+require 'chart_fu/charts/bar_chart'
+
 require 'chart_fu/backends/google_chart_api_backend'
 
 puts "** chart_fu loaded"
@@ -48,6 +52,7 @@ module ChartFu
         # TODO: Better test if +model+ really is an AR model
         when 'Class'
           # time-series line chart of +DATE(created_at)+ values
+          # TODO: Depending on zoom level, pull weeks or months or years
           d = data.send(:count, :group => "DATE(created_at)")
           
           puts (opts[:width]/d.size.to_f)

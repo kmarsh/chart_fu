@@ -1,6 +1,6 @@
 module ChartFu
   module Charts
-    class Line
+    class Line < Base
       attr_accessor :opts
       attr_accessor :title
       attr_accessor :labels
