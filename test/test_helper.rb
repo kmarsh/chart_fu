@@ -1,7 +1,7 @@
 require 'test/unit'
 require 'rubygems'
 require 'active_record'
-require 'acive_support'
+require 'active_support'
 
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 RAILS_ROOT = File.dirname(__FILE__)

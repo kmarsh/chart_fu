@@ -31,7 +31,10 @@ chart_fu aims to be civil when collecting data and displaying charts, using sens
 
 chart_fu doesn't generate graphics on its own, but rather acts as a abstract frontend to whatever charting library you choose. This means only having to write charting code once and only once.
 
+Support is planned for:
+
  * Google Chart API (via http://gchartrb.rubyforge.org/) - default
+ * Flot (http://code.google.com/p/flot/)
  * Gruff (http://nubyonrails.com/pages/gruff)
  * Chart Director (http://www.advsofteng.com/)
  * Open Flash Chart (http://teethgrinder.co.uk/open-flash-chart/)
