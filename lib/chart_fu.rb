@@ -119,7 +119,7 @@ module ChartFu
           if data.keys.all? {|k| k.is_a?(Date) || k.is_a?(Time) }
             # time-series line chart
             opts[:labels] = data.keys
-            opts[:data]   = d.values
+            opts[:data]   = data
             opts[:legend] = false
           
             chart = Charts::Line.new(opts)

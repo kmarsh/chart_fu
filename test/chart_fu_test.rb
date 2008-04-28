@@ -2,17 +2,60 @@ require File.expand_path(File.dirname(__FILE__) + "/test_helper")
 
 class ChartFuTest < Test::Unit::TestCase
 
-  def test_activerecord_model_chart_fu
+  context "An ActiveRecord model" do
+    setup do
+      
+    end
     
+    should "return a line chart of DATE(created_at) counts" do
+      
+    end
   end
   
-  def test_array_chart_fu
-    values = [1, 2, 3, 4, 5, 6]
-    chart = chart_fu(values)
-    assert_equal values, chart.data
+  context "An array" do
+    setup do
+      @chart = chart_fu([1, 2, 3, 4, 5, 6])
+    end
+    
+    should "return a line chart" do
+      assert_kind_of ChartFu::Charts::Line, @chart
+    end
+
+    should "not have a title" do
+      assert_equal "", @chart.title      
+    end
+    
+    should "not have a legend" do
+      assert !@chart.legend      
+    end
   end
   
-  def test_hash_chart_fu
+  context "A hash with labels as keys" do    
+    setup do
+      @chart = chart_fu({"A" => [1, 2, 3, 4, 5], "B" => [5, 4, 3, 2, 1]})
+    end
+    
+    should "return a line chart" do
+      assert_kind_of ChartFu::Charts::Line, @chart      
+    end
+    
+    should "have a legend" do
+      assert @chart.legend
+    end
+  end
+  
+  context "A hash with dates as keys" do
+    setup do
+      @chart = chart_fu({Date.new(2008, 2, 1) => 1, Date.new(2008, 3, 1) => 5}, :from => Date.new(2008, 1, 1), :to => Date.new(2008, 12, 31))
+    end
+
+    should "return a line chart" do
+      assert_kind_of ChartFu::Charts::Line, @chart      
+    end
+    
+    should "not have a legend" do
+      assert !@chart.legend
+    end
     
   end
 
