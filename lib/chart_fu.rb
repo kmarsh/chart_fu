@@ -47,9 +47,9 @@ module ChartFu
       # opts[:format][:]
       
       # Build up a graph based on what data we have
-      case data.class.to_s
+      case data
         # TODO: Better test if +model+ really is an AR model
-        when 'Class'
+        when Class
           # time-series line chart of +DATE(created_at)+ values
           # TODO: Depending on zoom level, pull weeks or months or years
           d = data.send(:count, :group => "DATE(created_at)", :order => "created_at")
@@ -105,24 +105,24 @@ module ChartFu
           opts[:data]   = d.values
           opts[:legend] = false            
           
-          Charts::Line.new(opts).render
+          chart = Charts::Line.new(opts)
           
-        when 'Array'
+        when Array
           # ambiguous x-axis line chart
           opts[:data]   = data
           opts[:labels] = []
           opts[:legend] = false
           
-          Charts::Line.new(opts).render
+          chart = Charts::Line.new(opts)
           
-        when 'Hash'
+        when Hash
           if data.keys.all? {|k| k.is_a?(Date) || k.is_a?(Time) }
             # time-series line chart
             opts[:labels] = data.keys
             opts[:data]   = d.values
             opts[:legend] = false
           
-            Charts::Line.new(opts).render
+            chart = Charts::Line.new(opts)
             
           elsif data.values.all? {|v| v.is_a?(Array)}
             # multi-axis line graph
@@ -130,12 +130,17 @@ module ChartFu
             opts[:labels] = []
             opts[:legend] = true
           
-            Charts::Line.new(opts).render
+            chart = Charts::Line.new(opts)
           
           else
             # pie chart
             
           end
+          
+          # TODO: If we're being called in a view, go ahead and render, otherwise
+          # just return the chart object
+          return chart
+          
       end
     end
   end
