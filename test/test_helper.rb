@@ -7,12 +7,33 @@ require 'shoulda'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 RAILS_ROOT = File.dirname(__FILE__)
 
+def log_to(stream)
+  ActiveRecord::Base.logger = Logger.new(stream)
+  ActiveRecord::Base.clear_active_connections!
+end
+
+log_to STDOUT
+
+ActiveRecord::Base.establish_connection({
+      :adapter => "sqlite3", 
+      :dbfile => "db/test.sqlite3"
+})
+
+class Post < ActiveRecord::Base
+  def self.setup
+    if Post.count != 120
+      puts "Creating Posts..."
+      Post.delete_all
+      (0..60).each do |day|
+        (day % 5).times do
+          Post.create(:created_at => day.days.ago, :updated_at => day.days.ago)
+        end
+      end
+    end
+  end
+end
+
+Post.setup
+
 require 'chart_fu'
 Object.send :include, ChartFu::Mixin
-
-# >> (Date.new(2007, 1, 1)..Date.new(2007, 12, 31)).each {|d| rand(10).times { Post.create(:created_at => d) } }
-# => Mon, 01 Jan 2007..Mon, 31 Dec 2007
-# >> (Date.new(2007, 1, 2)..Date.new(2007, 1, 28)).each {|d| rand(10).times { User.create(:created_at => d) } }
-# => Tue, 02 Jan 2007..Sun, 28 Jan 2007
-# >> (Date.new(2007, 1, 1)..Date.new(2007, 1, 6)).each {|d| rand(10).times { Building.create(:created_at => d) } }
-# => Mon, 01 Jan 2007..Sat, 06 Jan 2007

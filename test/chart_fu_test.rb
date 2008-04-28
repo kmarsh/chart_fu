@@ -4,11 +4,11 @@ class ChartFuTest < Test::Unit::TestCase
 
   context "An ActiveRecord model" do
     setup do
-      
+      @chart = chart_fu(Post)
     end
     
     should "return a line chart of DATE(created_at) counts" do
-      
+      assert_kind_of ChartFu::Charts::Line, @chart   
     end
   end
   
