@@ -7,7 +7,13 @@ Backend for Multiple Charting Backends
 
 A big problem with Ruby chart libraries (and chart libraries in general) is the lack of a standard API for generating output. gruff has one way, chart_director another, and gchartrb yet another. I want to be able to distill an optimal API for multiple types of charts, then write backend adapters for this API to 
 
-This'll involve looking at each charting library and finding useful 
+This'll involve looking at each charting library and finding common and superior APIs.
+
+Other Charting APIs to Look At and Learn From
+---------------------------------------------
+* gruff 
+* gchartrb
+  Has an interesting approach to shared elements of charts (i.e., Legends): using mixins to share common functionality 
 
 
 Convention-over-Configurtion Chart Generation

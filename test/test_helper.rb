@@ -15,9 +15,11 @@ end
 log_to STDOUT
 
 ActiveRecord::Base.establish_connection({
-      :adapter => "sqlite3", 
-      :dbfile => "db/test.sqlite3"
+  :adapter => "sqlite3", 
+  :dbfile => "db/test.sqlite3"
 })
+
+ActiveRecord::Migrator.migrate("db/migrate/")
 
 class Post < ActiveRecord::Base
   def self.setup
