@@ -15,8 +15,8 @@ end
 log_to STDOUT
 
 ActiveRecord::Base.establish_connection({
-      :adapter => "sqlite3", 
-      :dbfile => "db/test.sqlite3"
+  :adapter => "sqlite3", 
+  :dbfile => "db/test.sqlite3"
 })
 
 class Post < ActiveRecord::Base
