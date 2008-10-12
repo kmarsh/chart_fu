@@ -1,5 +1,6 @@
 chart_fu is a charting library for Ruby with multiple backend support and easy, convention over configuration, data access.
 
+
 == Examples
 
 The simplest thing that could possibly work:
@@ -23,9 +24,11 @@ chart_fu understands other Ruby data structures as well:
     <%= chart_fu {Date.new(2008, 2, 1) => 1, Date.new(2008, 3, 1) => 5},
           :from => Date.new(2008, 1, 1), :to => Date.new(2008, 12, 31) %>
 
+
 == Principles
 
 chart_fu aims to be civil when collecting data and displaying charts, using sensible defaults that will create meaningful, pleasing, and readable output.
+
     
 == Backends
 

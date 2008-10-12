@@ -1,0 +1,18 @@
+I invision chart_fu as really serving two seperate (but complimentary) functions: 
+ * backend for multiple charting backends
+ * "intelligently" generating charts using convention-over-configuration techniques
+ 
+Backend for Multiple Charting Backends
+--------------------------------------
+
+A big problem with Ruby chart libraries (and chart libraries in general) is the lack of a standard API for generating output. gruff has one way, chart_director another, and gchartrb yet another. I want to be able to distill an optimal API for multiple types of charts, then write backend adapters for this API to 
+
+This'll involve looking at each charting library and finding useful 
+
+
+Convention-over-Configurtion Chart Generation
+---------------------------------------------
+
+The genesis for chart_fu was the desire to be able to write <%= chart_fu Post %> and get a chart of posts created over time. or maybe <%= chart_fu Post, User %> and get a two-series chart of posts and users over time.
+
+Then I thought of more ways this could be used, with multiple Ruby data types... arrays, hashes, etc.
