@@ -16,26 +16,21 @@ log_to STDOUT
 
 ActiveRecord::Base.establish_connection({
   :adapter => "sqlite3", 
-  :dbfile => "db/test.sqlite3"
+  :dbfile => ":memory:"
 })
 
-ActiveRecord::Migrator.migrate("db/migrate/")
 
-class Post < ActiveRecord::Base
-  def self.setup
-    if Post.count != 120
-      puts "Creating Posts..."
-      Post.delete_all
-      (0..60).each do |day|
-        (day % 5).times do
-          Post.create(:created_at => day.days.ago, :updated_at => day.days.ago)
-        end
-      end
-    end
-  end
-end
+class Post < ActiveRecord::Base; end
+class User < ActiveRecord::Base; end
 
-Post.setup
+ActiveRecord::Migration.verbose = false
+
+load(File.dirname(__FILE__) + '/db/schema.rb')
+
+# ActiveRecord::Migrator.migrate("db/migrate")
+
+# CreatePosts.migrate(:up)
+# CreateUsers.migrate(:up)
 
 require 'chart_fu'
 Object.send :include, ChartFu::Mixin
