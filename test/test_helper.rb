@@ -7,18 +7,17 @@ require 'shoulda'
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 RAILS_ROOT = File.dirname(__FILE__)
 
-def log_to(stream)
-  ActiveRecord::Base.logger = Logger.new(stream)
-  ActiveRecord::Base.clear_active_connections!
-end
-
-log_to STDOUT
+# def log_to(stream)
+#   ActiveRecord::Base.logger = Logger.new(stream)
+#   ActiveRecord::Base.clear_active_connections!
+# end
+# 
+# log_to STDOUT
 
 ActiveRecord::Base.establish_connection({
   :adapter => "sqlite3", 
   :dbfile => ":memory:"
 })
-
 
 class Post < ActiveRecord::Base; end
 class User < ActiveRecord::Base; end
