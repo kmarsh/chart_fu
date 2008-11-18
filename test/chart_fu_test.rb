@@ -12,6 +12,16 @@ class ChartFuTest < Test::Unit::TestCase
     end
   end
   
+  context "Two ActiveRecord models" do
+    setup do
+      @chart = chart_fu(Post, User)
+    end
+    
+    should "return a two-series line chart of DATE(created_at) counts" do
+      assert_kind_of ChartFu::Charts::Line, @chart   
+    end
+  end  
+  
   context "An array" do
     setup do
       @chart = chart_fu([1, 2, 3, 4, 5, 6])
