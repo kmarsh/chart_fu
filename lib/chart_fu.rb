@@ -58,7 +58,8 @@ module ChartFu
         when Class
           # time-series line chart of +DATE(created_at)+ values
           # TODO: Depending on zoom level, pull weeks or months or years
-          d = data.send(:count, :group => "DATE(created_at)", :order => "created_at")
+          conditions = ['created_at > ?', opts[:from]] if opts[:from]
+          d = data.send(:count, :group => "DATE(created_at)", :order => "created_at", :conditions => conditions)
 
           return if d.empty?
 

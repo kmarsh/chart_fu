@@ -10,16 +10,54 @@ class ChartFuTest < Test::Unit::TestCase
     should "return a line chart of DATE(created_at) counts" do
       assert_kind_of ChartFu::Charts::Line, @chart
     end
+    
+    context "with a :from argument of 1.week.ago" do
+      setup do
+        @chart = chart_fu(Post, :from => 1.week.ago)
+      end
+    
+      should "return a line chart of DATE(created_at) counts starting from 1 week ago" do
+        assert_kind_of ChartFu::Charts::Line, @chart
+        assert_equal 5, @chart.data.size
+      end
+    end
+    
+    context "with a :from argument of 2.week.ago" do
+      setup do
+        @chart = chart_fu(Post, :from => 2.week.ago)
+      end
+    
+      should "return a line chart of DATE(created_at) counts starting from 2 weeks ago" do
+        assert_kind_of ChartFu::Charts::Line, @chart
+        assert_equal 11, @chart.data.size
+      end
+    end    
   end
   
   context "Two ActiveRecord models" do
-    setup do
-      @chart = chart_fu([Post, User])
+    context "with no options specified" do
+      setup do
+        @chart = chart_fu([Post, User])
+      end
+
+      should "return a two-series line chart of DATE(created_at) counts" do
+        assert_kind_of ChartFu::Charts::Line, @chart   
+      end    
     end
-    
-    should "return a two-series line chart of DATE(created_at) counts" do
-      assert_kind_of ChartFu::Charts::Line, @chart   
-    end
+
+    context "with basic options specified" do
+      setup do
+        @chart = chart_fu([Post, User], :title => "Posts and Users")
+      end
+
+      should "return a two-series line chart of DATE(created_at) counts" do
+        assert_kind_of ChartFu::Charts::Line, @chart   
+      end
+      
+      should "have a title" do
+        assert_equal "Posts and Users", @chart.title
+      end      
+    end    
   end  
   
   context "An array of Fixnums" do
