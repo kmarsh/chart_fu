@@ -1,13 +1,13 @@
+require 'rubygems'
 require 'rake'
-require 'rake/testtask'
 require 'rake/rdoctask'
 
 task :default => :test
 
-Rake::TestTask.new do |t|
-  t.libs << "test" << "lib"
-  t.test_files = FileList['test/*test.rb']
-  t.verbose = true
+task :test do
+  require 'rake/runtest'
+  require 'monkeyspecdoc'
+  Rake.run_tests 'test/chart_fu_test.rb'
 end
 
 desc 'Generate RDoc documentation for the chart_fu plugin.'

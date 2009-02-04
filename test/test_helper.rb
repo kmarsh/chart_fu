@@ -4,13 +4,6 @@ require 'active_record'
 require 'active_support'
 require 'shoulda'
 
-begin
-  require 'rubygems'
-  require 'redgreen'
-rescue LoadError
-  puts "** Error loading redgreen"
-end
-
 $:.unshift(File.dirname(__FILE__) + '/../lib')
 RAILS_ROOT = File.dirname(__FILE__)
 
