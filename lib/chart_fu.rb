@@ -4,7 +4,6 @@ require 'chart_fu/charts/pie_chart'
 require 'chart_fu/charts/scatter_chart'
 require 'chart_fu/charts/bar_chart'
 
-
 require 'chart_fu/backends/google_chart_api_backend'
 require 'chart_fu/backends/flot_backend'
 
