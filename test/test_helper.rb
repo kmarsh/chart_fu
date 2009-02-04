@@ -23,11 +23,7 @@ RAILS_ROOT = File.dirname(__FILE__)
 
 ActiveRecord::Base.establish_connection({
   :adapter => "sqlite3", 
-<<<<<<< HEAD:test/test_helper.rb
   :dbfile => ":memory:"
-=======
-  :dbfile => "db/test.sqlite3"
->>>>>>> 71e1879ae843b82ad1ef7fa3ac304452df83ae8d:test/test_helper.rb
 })
 
 class Post < ActiveRecord::Base; end

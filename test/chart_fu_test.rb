@@ -14,7 +14,7 @@ class ChartFuTest < Test::Unit::TestCase
   
   context "Two ActiveRecord models" do
     setup do
-      @chart = chart_fu(Post, User)
+      @chart = chart_fu([Post, User])
     end
     
     should "return a two-series line chart of DATE(created_at) counts" do
@@ -42,11 +42,25 @@ class ChartFuTest < Test::Unit::TestCase
   
   context "An array of ActiveRecord models" do
     setup do
-      @chart = chart_fu(Post, User)
+      @chart = chart_fu([Post, User])
     end
     
-    should "return a line chart of DATE(created_at) counts" do
+    should "return a line chart" do
       assert_kind_of ChartFu::Charts::Line, @chart
+    end
+  end
+  
+  context "An array of ActiveRecord models with options" do
+    setup do
+      @chart = chart_fu([Post, User], { :title => "Posts and Users" })
+    end
+    
+    should "return a line chart" do
+      assert_kind_of ChartFu::Charts::Line, @chart
+    end
+    
+    should "have a title" do
+      assert_equal "Posts and Users", @chart.title
     end
   end
   

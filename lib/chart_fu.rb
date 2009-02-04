@@ -42,8 +42,10 @@ module ChartFu
     #                     enables the fill option), optional 
     #  * <tt>:fill</tt> - fill in missing dates if a time-series chart is used,
     #                     optional, default: false
-    def chart_fu(data, opts = {})
-
+    def chart_fu(*args, &block)
+      data = args.first
+      opts = args.second || {}
+      
       opts[:width]  = 240 if opts[:width].blank?
       opts[:height] = 100 if opts[:height].blank?
       opts[:title]  = "" if opts[:title].blank?
@@ -64,8 +66,6 @@ module ChartFu
           min_date, max_date = d.keys.first, d.keys.last
           range = (Date.parse(max_date) - Date.parse(min_date)).to_i              # days
           point_density = (opts[:width].to_f / points.to_f)
-          
-          puts "points: #{points}, range: #{range}, point_density: #{point_density}"
           
           # Based on the number of results we get back, and how far apart they
           # are, we may want to pull less-specific data. There are a few
